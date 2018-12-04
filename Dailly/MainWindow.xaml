@@ -1,0 +1,45 @@
+﻿<Controls:MetroWindow 
+        x:Class="Dailly.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:ViewModel="clr-namespace:Dailly.ViewModels.Main"
+        xmlns:local="clr-namespace:Dailly"
+        mc:Ignorable="d"
+        Title="Daily Main" Height="600" Width="1024">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="28*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="환영합니다." HorizontalAlignment="Left" Margin="10"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Content="정보수정" HorizontalAlignment="Left" Margin="5,0,5,0"/>
+                    <Button Content="로그아웃" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,10">
+                <Button Content="계획설계" FontSize="13" Margin="0,10,0,10"/>
+                <Button Content="계획보기" FontSize="13" Margin="0,10,0,10"/>
+                <!--<Button Content="일단위 게획" FontSize="13" Margin="0,10,0,10"/>
+                <Button Content="요일별 상황" FontSize="13" Margin="0,10,0,10"/>-->
+            </StackPanel>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Left" ShowsPreview="True"/>
+        <ContentControl Grid.Column="2" Content="{Binding PlanDesign}"/>
+    </Grid>
+</Controls:MetroWindow>

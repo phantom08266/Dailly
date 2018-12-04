@@ -1,0 +1,93 @@
+﻿<Controls:MetroWindow 
+        x:Class="Dailly.Views.Login.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:ViewModel="clr-namespace:Dailly.ViewModels.Login"
+        xmlns:local="clr-namespace:Dailly.Behavior"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Login" Height="600" Width="400" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow" ShowMinButton="True"
+        MaxHeight="600" MaxWidth="400" MinWidth="400" MinHeight="600">
+    
+    <Window.DataContext>
+        <ViewModel:LoginViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Dailly Login"  HorizontalAlignment="Center"
+               VerticalAlignment="Center" FontSize="50" FontWeight="Bold"/>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="ID" Foreground="Black" 
+                       FontSize="30" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" 
+                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                     Width="150" FontSize="20" Text="{Binding Path=UserID, Mode=TwoWay}"/>
+
+            <TextBlock Grid.Row="1" Text="PW" Foreground="Black" 
+                       FontSize="30" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       />
+            <PasswordBox Grid.Row="1" Grid.Column="1" 
+                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                     Width="150" FontSize="20"
+                     >
+                <i:Interaction.Behaviors>
+                    <local:PasswordBoxBehavior Password="{Binding UserPassword, Mode=TwoWay}"/>
+                </i:Interaction.Behaviors>
+            </PasswordBox>
+        </Grid>
+        <Grid Grid.Row="2" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Sign Up" HorizontalAlignment="Center"
+                    Width="100" Command="{Binding Path=SignUpBtn}"/>
+            <Button Grid.Column="1" Content="Login" HorizontalAlignment="Center"
+                    Width="100" Command="{Binding Path=LoginBtn}"
+                    CommandParameter="{Binding ElementName=UserPassword}">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="ErrorMessage"
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="1.0" To="0.0" Duration="0:0:1"
+                                    RepeatBehavior="0:0:2"
+                                />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+        </Grid>
+        <TextBlock x:Name="ErrorMessage" Grid.Row="3" Text="{Binding Path=LoginEventMessage, Mode=OneWay}"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontWeight="Bold" FontSize="13" Foreground="Yellow">
+
+        </TextBlock>
+    </Grid>
+</Controls:MetroWindow>
